@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>탐색</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+	<style>
+		div,
+		span {
+			display: block;
+			border: 1px solid black;
+			padding: 10px;
+			margin: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="grandparent">
+		grandparent
+		<div class="parent">
+			parent
+			<div class="child">
+				child
+				<span class="subchild">subchild</span>
+			</div>
+		</div>
+		<div class="surrogateParent1">surrogateParent1</div>
+		<div class="surrogateParent2">surrogateParent2</div>
+	</div>
+
+	<script>
+		$(function () {
+			// 바로 위 부모 엘리먼트 탐색
+			$("span.subchild").parent();	// div.child 반환
+
+			// 주어진 선택자와 일치하는 모든 부모 엘리먼트 탐색
+			$("span.subchild").parents("div.parent");	// div.parent 반환
+
+			// 모든 부모 엘리먼트를 탐색
+			$("span.subchild").parents();	// div.child, div.parent, div.grandparent 반환
+
+			// 글씨 호버했을 때 박스에 배경 주고 싶은 경우, 박스 찾아갈 때 사용
+
+			/* ----------------------------------- */
+
+			// 가장 가까운 부모 엘리먼트 탐색
+			// 단 하나의 부모 엘리먼트만 탐색하며, 선택한 엘리먼트 자체도 검색 대상에 포함
+			$("span.subchild").closest("div");	// div.child 반환
+			$("div.child").closest("div");	// div.child 반환
+
+			/* ----------------------------------- */
+
+			// 바로 아래 자식 엘리먼트 탐색
+			$("div.grandparent").children("div");	// div.parent, div.surrogateParent1, div.surrogateParent2 반환
+
+			// 선택한 엘리먼트 내에서 선택자와 일치하는 모든 엘리먼트 탐색
+			$("div.grandparent").find("div");	// div.parent, div.child, div.surrogateParent1, div.surrogateParent2 반환
+
+			/* ----------------------------------- */
+
+			// 선택자와 일치하는 형제 엘리먼트를 양방향으로 탐색
+			$("div.parent").siblings();	// div.surrogateParent1, div.surrogateParent2 반환
+			$("div.surrogateParent1").siblings();	// div.parent, div.surrogateParent2 반환
+
+			/* ----------------------------------- */
+
+			// 다음 형제 앨리먼트 탐색
+			$("div.parent").next();	// div.surrogateParent1 반환
+
+			// 이전 형제 앨리먼트 탐색
+			$("div.parent").prev();	// div.parent 앞에 형제가 없으므로 [] 반환
+
+			// 모든 다음 형제 앨리먼트 탐색
+			$("div.parent").nextAll();	// div.surrogateParent1, div.surrogateParent2 반환
+			$("div.parent").nextAll().first();	// div.surrogateParent1 반환
+			$("div.parent").nextAll().last();	// div.surrogateParent2 반환
+
+			// 모든 이전 형제 엘리먼트 탐색
+			$("div.surrogateParent2").prevAll();	// div.surrogateParent1, div.parent 반환
+			$("div.surrogateParent2").prevAll().first();	// div.surrogateParent1 반환
+			$("div.surrogateParent2").prevAll().last();	// div.parent 반환
+		});
+	</script>
+</body>
+
+</html>

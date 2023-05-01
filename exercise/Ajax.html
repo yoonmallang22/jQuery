@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ajax</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+</head>
+
+<body>
+	<div id="result"></div>
+
+	<script>
+		$(function () {
+			const data_url = "https://raw.githubusercontent.com/paullabkorea/coronaVaccinationStatus/main/data/data.json";
+			// fail
+			// const data_url = "https://raw.githubusercontent.com/paullabkorea/coronaVaccinationStatus/main/data/data.json1";
+
+			$.ajax({
+				url: data_url,
+				method: "GET",
+				dataType: "json"
+			}).done(function (response_data) {
+				// console.log(response_data);
+				response_data.forEach(function (data) {
+					// console.log(data["시·도별(1)"]);
+					// console.log(data["1차 접종 퍼센트"]);
+					const location = data["시·도별(1)"];
+					const first_percent = data["1차 접종 퍼센트"];
+					$("#result").append(`<p>${location} : ${first_percent}</p>`);
+				})
+			}).fail(function (xhr, status, errorThrown) {
+				console.log(status);
+				console.log(errorThrown);
+			}).always(function () {
+				console.log("FINISH");
+			});
+		});
+	</script>
+</body>
+
+</html>

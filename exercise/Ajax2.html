@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Ajax</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+</head>
+
+<body>
+	<div id="result"></div>
+
+	<script>
+		$(function () {
+			// 유저 목록 가져오기
+			const url = "https://reqres.in/api/users";
+
+			$.ajax({
+				url: url,
+				method: "GET",
+				dataType: "json"
+			}).done(function (response_data) {
+				console.log(response_data);
+				response_data["data"].forEach(function (user) {
+					$user = $("<div></div>");
+					$user.append(`<img src="${user['avatar']}">`);
+					$user.append(`<p>${user["id"]} - ${user["email"]}</p>`);
+					$("#result").append($user);
+				});
+			});
+
+			// 유저 데이터 생성하기
+			const url2 = "https://reqres.in/api/users";
+
+			$.ajax({
+				url: url2,
+				method: "POST",
+				data: {
+					"name": "morpheus",
+					"job": "leader"
+				},
+				dataType: "json"
+			}).done(function (response_data) {
+				console.log(response_data);
+			});
+		});
+	</script>
+</body>
+
+</html>
